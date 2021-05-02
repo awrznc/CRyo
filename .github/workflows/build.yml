@@ -1,0 +1,72 @@
+name: Build
+
+# build timings
+on:
+  push:
+    branches:
+
+jobs:
+  centos-build:
+    runs-on: ubuntu-latest
+    container: centos:8
+    steps:
+
+    - name: Get files
+      uses: actions/checkout@v2
+
+    - name: Build CRyo
+      run: |
+        dnf update -y && dnf upgrade -y
+        dnf install -y gcc gcc-c++ make cmake
+        mkdir -p build && cd build
+        cmake -DCMAKE_BUILD_TYPE=Release .. && cmake --build .
+
+    - name: Build RPM Package
+      run: |
+        dnf install -y rpm-build
+        cd build
+        cpack -G RPM CPackConfig.cmake
+
+    - name: Install Test
+      run: |
+        cd build
+        dnf install -y ./CRyo-0.0.1-Linux.rpm
+        cryo --version
+
+    - name: Upload archive
+      uses: actions/upload-artifact@v2
+      with:
+        name: x86_64-redhat-linux-gnu
+        path: build/CRyo-0.0.1-Linux.rpm
+
+  debian-build:
+    runs-on: ubuntu-latest
+    container: debian:10
+    steps:
+
+    - name: Get files
+      uses: actions/checkout@v2
+
+    - name: Build CRyo
+      run: |
+        apt-get update -y && apt-get upgrade -y
+        apt-get install -y gcc g++ make cmake
+        mkdir -p build && cd build
+        cmake -DCMAKE_BUILD_TYPE=Release .. && cmake --build .
+
+    - name: Build DEB Package
+      run: |
+        cd build
+        cpack -G DEB
+
+    - name: Install Test
+      run: |
+        cd build
+        apt-get install -y ./CRyo-0.0.1-Linux.deb
+        cryo --version
+
+    - name: Upload archive
+      uses: actions/upload-artifact@v2
+      with:
+        name: x86_64-debian-linux-gnu
+        path: build/CRyo-0.0.1-Linux.deb
