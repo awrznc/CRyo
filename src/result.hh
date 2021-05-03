@@ -6,6 +6,7 @@ namespace cryo {
   * example:
   *
   * ```cc
+  * #include <assert.h>
   * #include <iostream>
   * #include "result.hh"
   *
@@ -14,7 +15,7 @@ namespace cryo {
   *     value.setError(std::string("Runtime error."));
   *
   *     if ( value.is_error() ) {
-  *         std::cout << value.Error() << std::endl;
+  *         assert(value.Error() == std::string("Runtime error."));
   *     }
   *     return 0;
   * }
@@ -83,6 +84,7 @@ public:
     OK setOk(OK value) {
         this->status = Status::OK_STATUS;
         this->ok_value = value;
+        return this->ok_value;
     }
 
     /**
@@ -102,6 +104,7 @@ public:
     ERROR setError(ERROR value) {
         this->status = Status::ERROR_STATUS;
         this->error_value = value;
+        return this->error_value;
     }
 
     /**
