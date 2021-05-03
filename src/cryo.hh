@@ -38,18 +38,18 @@ Options:\n\
         public:
             Arguments(int argc, char *argv[]);
             ~Arguments();
-            bool validate(std::vector<std::string>& paths, std::string& exportPath);
+            bool validate(std::vector<std::string>& importPaths, std::string& exportPath);
             bool get_src_path();
         };
         class Generator {
         public:
             Generator();
             ~Generator();
-            bool generate(std::vector<std::string>& paths, std::string& exportPath);
+            bool generate(std::vector<std::string>& importPaths, std::string& exportPath);
         };
         std::unique_ptr<Arguments> arguments;
         std::unique_ptr<Generator> generator;
-        std::vector<std::string> paths;
+        std::vector<std::string> import_paths;
         std::string export_path;
 
     public:
@@ -74,7 +74,7 @@ bool cryo::Object::Arguments::get_src_path() {
     return true;
 }
 
-bool cryo::Object::Arguments::validate(std::vector<std::string>& paths, std::string& exportPath) {
+bool cryo::Object::Arguments::validate(std::vector<std::string>& importPaths, std::string& exportPath) {
 
     int help_status = 0;
     int version_status = 0;
@@ -142,7 +142,7 @@ bool cryo::Object::Arguments::validate(std::vector<std::string>& paths, std::str
             for (const std::filesystem::directory_entry& entry : std::filesystem::recursive_directory_iterator(open_path)) {
                 std::string str = entry.path().string();
                 if (std::regex_search(str, m, re)) {
-                    paths.push_back( entry.path().string() );
+                    importPaths.push_back( entry.path().string() );
                 }
             }
         } else {
@@ -150,7 +150,7 @@ bool cryo::Object::Arguments::validate(std::vector<std::string>& paths, std::str
             return false;
         }
 
-        if(paths.empty()) {
+        if(importPaths.empty()) {
             printf("%s: c source is not found. no work to do.\n", this->arguments_values[0]);
             return true;
         }
@@ -247,18 +247,19 @@ bool cryo::Object::Generator::generate(std::vector<std::string>& importPaths, st
 cryo::Object::Object(int argc, char *argv[]) {
     this->arguments = std::make_unique<Arguments>(argc, argv);
     this->generator = std::make_unique<Generator>();
-    this->paths = {};
+    this->import_paths = {};
+    this->export_path = "";
 }
 
 cryo::Object::~Object() {
-    std::vector<std::string>().swap(this->paths);
+    std::vector<std::string>().swap(this->import_paths);
     return;
 }
 
 bool cryo::Object::validate() {
-    return this->arguments->validate(this->paths, this->export_path);
+    return this->arguments->validate(this->import_paths, this->export_path);
 }
 
 bool cryo::Object::generate() {
-    return this->generator->generate(this->paths, this->export_path);
+    return this->generator->generate(this->import_paths, this->export_path);
 }
