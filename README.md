@@ -46,3 +46,19 @@ make install
 ```bash
 cryo --import ./src/ --export ./build/
 ```
+
+
+### CMake
+
+```cmake
+cmake_minimum_required(VERSION 3.10)
+project(sample C)
+
+# cryo
+include(${CMAKE_INSTALL_PREFIX}/share/cmake/cryo/CRyo.cmake)
+
+cryo(
+  IMPORT "${CMAKE_CURRENT_SOURCE_DIR}/src/"
+  EXPORT "${CMAKE_BINARY_DIR}/test/"
+)
+```

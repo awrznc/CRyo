@@ -11,7 +11,9 @@ set(CMAKE_CXX_STANDARD 17)
 add_executable(cryo src/main.cc)
 target_link_libraries(cryo stdc++fs)
 
-install(TARGETS cryo DESTINATION bin)
+# Install
+install( TARGETS cryo DESTINATION bin )
+install( FILES ${CMAKE_SOURCE_DIR}/CRyo.cmake DESTINATION share/cmake/cryo/ )
 
 # CPack
 set(CPACK_DEBIAN_PACKAGE_MAINTAINER "awrznc")
