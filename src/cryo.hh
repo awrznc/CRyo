@@ -134,14 +134,14 @@ bool cryo::Object::Arguments::validate(std::vector<std::string>& importPaths, st
         std::string open_path = std::string(import_path);
         std::ifstream ifs(open_path);
         std::regex re(CRYO_CXX_EXTENSION_REGEX);
-        std::smatch m;
+        std::smatch match;
 
         // TODO: check a file or directory
 
         if (ifs.is_open()) {
             for (const std::filesystem::directory_entry& entry : std::filesystem::recursive_directory_iterator(open_path)) {
                 std::string str = entry.path().string();
-                if (std::regex_search(str, m, re)) {
+                if (std::regex_search(str, match, re)) {
                     importPaths.push_back( entry.path().string() );
                 }
             }
@@ -173,8 +173,8 @@ bool cryo::Object::Generator::generate(std::vector<std::string>& importPaths, st
 
     int hash_seed = 0;
 
-    std::smatch m;
-    if (!std::regex_search(exportPath, m, std::regex("/$"))) {
+    std::smatch match;
+    if (!std::regex_search(exportPath, match, std::regex("/$"))) {
         exportPath = exportPath + "/";
     }
 
@@ -207,8 +207,8 @@ bool cryo::Object::Generator::generate(std::vector<std::string>& importPaths, st
         // std::string extension = "";
 
         while (getline(ifs, str)) {
-            if(std::regex_search(str, m, re)) {
-                if(std::regex_search(str, m, cxx_code_block_begin)) {
+            if(std::regex_search(str, match, re)) {
+                if(std::regex_search(str, match, cxx_code_block_begin)) {
                     if (is_cxx_code_block == false) {
                         is_cxx_code_block = true;
                         hash_seed++;
@@ -216,7 +216,7 @@ bool cryo::Object::Generator::generate(std::vector<std::string>& importPaths, st
                         printf("parse error.");
                         return 0;
                     }
-                } else if(std::regex_search(str, m, cxx_code_block_end)) {
+                } else if(std::regex_search(str, match, cxx_code_block_end)) {
                     if (is_cxx_code_block == true) {
                         // export file
                         // TODO: Make file names easier to understand.
@@ -234,8 +234,8 @@ bool cryo::Object::Generator::generate(std::vector<std::string>& importPaths, st
                         return 0;
                     }
                 } else {
-                    if(is_cxx_code_block == true && std::regex_search(str, m, re)) {
-                        export_string = export_string + m[4].str() + "\n";
+                    if(is_cxx_code_block == true && std::regex_search(str, match, re)) {
+                        export_string = export_string + match[4].str() + "\n";
                     }
                 }
             }
