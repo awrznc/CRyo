@@ -30,14 +30,14 @@ jobs:
     - name: Install Test
       run: |
         cd build
-        dnf install -y ./CRyo-0.0.1-Linux.rpm
+        dnf install -y ./CRyo.rpm
         cryo --version
 
     - name: Upload archive
       uses: actions/upload-artifact@v2
       with:
         name: x86_64-redhat-linux-gnu
-        path: build/CRyo-0.0.1-Linux.rpm
+        path: build/CRyo.rpm
 
   debian-build:
     runs-on: ubuntu-latest
@@ -62,11 +62,11 @@ jobs:
     - name: Install Test
       run: |
         cd build
-        apt-get install -y ./CRyo-0.0.1-Linux.deb
+        apt-get install -y ./CRyo.deb
         cryo --version
 
     - name: Upload archive
       uses: actions/upload-artifact@v2
       with:
         name: x86_64-debian-linux-gnu
-        path: build/CRyo-0.0.1-Linux.deb
+        path: build/CRyo.deb

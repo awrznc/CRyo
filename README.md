@@ -12,11 +12,11 @@ Documentation testing tool for C programming language.
 ```bash
 # Debian 10
 apt-get install -y wget
-wget https://github.com/awrznc/CRyo/releases/latest/download/CRyo-0.0.1-Linux.deb
-apt-get install -y ./CRyo-0.0.1-Linux.deb
+wget https://github.com/awrznc/CRyo/releases/latest/download/CRyo.deb
+apt-get install -y ./CRyo.deb
 
 # CentOS 8
-dnf install -y https://github.com/awrznc/CRyo/releases/latest/download/CRyo-0.0.1-Linux.rpm
+dnf install -y https://github.com/awrznc/CRyo/releases/latest/download/CRyo.rpm
 ```
 
 
