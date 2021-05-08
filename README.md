@@ -53,6 +53,7 @@ cryo --import ./src/ --export ./build/
 ```cmake
 cmake_minimum_required(VERSION 3.10)
 project(sample C)
+enable_testing()
 
 # cryo
 include(${CMAKE_INSTALL_PREFIX}/share/cmake/cryo/CRyo.cmake)

@@ -11,6 +11,11 @@ set(CMAKE_CXX_STANDARD 17)
 add_executable(cryo src/main.cc)
 target_link_libraries(cryo stdc++fs)
 
+# Test
+enable_testing()
+add_test( NAME cryo_version_test COMMAND $<TARGET_FILE:cryo> "--version" )
+set_tests_properties(cryo_version_test PROPERTIES PASS_REGULAR_EXPRESSION "CRyo")
+
 # Install
 install( TARGETS cryo DESTINATION bin )
 install( FILES ${CMAKE_SOURCE_DIR}/CRyo.cmake DESTINATION share/cmake/cryo/ )
