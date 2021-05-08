@@ -136,13 +136,18 @@ bool cryo::Object::Arguments::validate(std::vector<std::string>& importPaths, st
         std::regex re(CRYO_CXX_EXTENSION_REGEX);
         std::smatch match;
 
-        // TODO: check a file or directory
-
         if (ifs.is_open()) {
-            for (const std::filesystem::directory_entry& entry : std::filesystem::recursive_directory_iterator(open_path)) {
-                std::string str = entry.path().string();
+            if (std::filesystem::is_directory(open_path)) {
+                for (const std::filesystem::directory_entry& entry : std::filesystem::recursive_directory_iterator(open_path)) {
+                    std::string str = entry.path().string();
+                    if (std::regex_search(str, match, re)) {
+                        importPaths.push_back( entry.path().string() );
+                    }
+                }
+            } else {
+                std::string str = open_path;
                 if (std::regex_search(str, match, re)) {
-                    importPaths.push_back( entry.path().string() );
+                    importPaths.push_back( open_path );
                 }
             }
         } else {
