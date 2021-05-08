@@ -1,6 +1,8 @@
 CRyo
 ===
 
+[![Build](https://github.com/awrznc/CRyo/actions/workflows/build.yml/badge.svg)](https://github.com/awrznc/CRyo/actions/workflows/build.yml)
+
 Documentation testing tool for C programming language.
 
 ## Install
