@@ -20,6 +20,7 @@ jobs:
         dnf install -y gcc gcc-c++ make cmake
         mkdir -p build && cd build
         cmake -DCMAKE_BUILD_TYPE=Release .. && cmake --build .
+        ctest
 
     - name: Build RPM Package
       run: |
@@ -30,14 +31,20 @@ jobs:
     - name: Install Test
       run: |
         cd build
-        dnf install -y ./CRyo-0.0.1-Linux.rpm
+        dnf install -y ./CRyo.rpm
         cryo --version
+
+    - name: Documentation Test
+      run: |
+        mkdir -p ./test/build && cd ./test/build
+        cmake .. && cmake --build .
+        ctest
 
     - name: Upload archive
       uses: actions/upload-artifact@v2
       with:
         name: x86_64-redhat-linux-gnu
-        path: build/CRyo-0.0.1-Linux.rpm
+        path: build/CRyo.rpm
 
   debian-build:
     runs-on: ubuntu-latest
@@ -53,6 +60,7 @@ jobs:
         apt-get install -y gcc g++ make cmake
         mkdir -p build && cd build
         cmake -DCMAKE_BUILD_TYPE=Release .. && cmake --build .
+        ctest
 
     - name: Build DEB Package
       run: |
@@ -62,11 +70,17 @@ jobs:
     - name: Install Test
       run: |
         cd build
-        apt-get install -y ./CRyo-0.0.1-Linux.deb
+        apt-get install -y ./CRyo.deb
         cryo --version
+
+    - name: Documentation Test
+      run: |
+        mkdir -p ./test/build && cd ./test/build
+        cmake .. && cmake --build .
+        ctest
 
     - name: Upload archive
       uses: actions/upload-artifact@v2
       with:
         name: x86_64-debian-linux-gnu
-        path: build/CRyo-0.0.1-Linux.deb
+        path: build/CRyo.deb
