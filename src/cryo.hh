@@ -13,7 +13,7 @@ namespace cryo {
 #include "result.hh"
 
 #define CRYO_APPLICATION_NAME   "CRyo"
-#define CRYO_VERSION            "0.0.1"
+#define CRYO_VERSION            "0.0.2"
 #define CRYO_HELP_STRING "\
 Usage:\n\
     cryo [options] <path>\n\
