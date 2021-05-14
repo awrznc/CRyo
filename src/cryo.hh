@@ -13,7 +13,7 @@ namespace cryo {
 #include "result.hh"
 
 #define CRYO_APPLICATION_NAME   "CRyo"
-#define CRYO_VERSION            "0.0.2"
+#define CRYO_VERSION            "0.0.3"
 #define CRYO_HELP_STRING "\
 Usage:\n\
     cryo [options] <path>\n\
@@ -25,7 +25,7 @@ Options:\n\
     -d --disable-docs   Disable generate documents.\n\
     -t --disable-tests  Disable generate tests.\n"
 
-#define CRYO_CXX_EXTENSION_REGEX "(\\.c|\\.cc|\\.cxx|\\.cpp|\\.h|\\.hh|\\.hxx|\\.hpp)$"
+#define CRYO_CXX_EXTENSION_REGEX "(\\.cc|\\.cxx|\\.cpp|\\.c|\\.hh|\\.hxx|\\.hpp|\\.h)$"
 
     class Object{
     private:
@@ -204,16 +204,15 @@ bool cryo::Object::Generator::generate(std::vector<std::string>& importPaths, st
         std::string export_string("");
 
         // TODO: add ~~~ pattern
-        std::regex cxx_code_block_begin("```.*(\\.|)(c|cc|cxx|cpp|h|hh|hxx|hpp)"); // or '~'
+        std::regex cxx_code_block_begin("```(\\.|)(c+|cxx|cpp|h+|hxx|hpp)"); // or '~'
         std::regex cxx_code_block_end("```"); // or '~'
         std::regex re("^(\\s*)(\\*)(\\s|)(.*)");
-
-        // TODO: extension from markdown
-        // std::string extension = "";
+        std::string extension = "";
 
         while (getline(ifs, str)) {
             if(std::regex_search(str, match, re)) {
                 if(std::regex_search(str, match, cxx_code_block_begin)) {
+                    extension = match[2].str();
                     if (is_cxx_code_block == false) {
                         is_cxx_code_block = true;
                         hash_seed++;
@@ -225,7 +224,7 @@ bool cryo::Object::Generator::generate(std::vector<std::string>& importPaths, st
                     if (is_cxx_code_block == true) {
                         // export file
                         // TODO: Make file names easier to understand.
-                        std::string export_file = exportPath + std::to_string(hash_seed) + ".cc";
+                        std::string export_file = exportPath + std::to_string(hash_seed) + "." + extension;
                         std::cout << "[INFO] export: " << export_file << std::endl;
                         std::ofstream outputfile(export_file.c_str());
                         outputfile << export_string;
