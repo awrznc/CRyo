@@ -8,7 +8,8 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_CXX_FLAGS "-O3")
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(cryo src/main.cc)
+add_executable(cryo src/main.cc src/cryo/cryo.cc src/cryo/generator.cc)
+target_include_directories(cryo PUBLIC src/cryo/)
 target_link_libraries(cryo stdc++fs)
 
 # Test
