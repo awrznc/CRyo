@@ -14,7 +14,7 @@ bool cryo::Object::Arguments::get_src_path() {
     return true;
 }
 
-bool cryo::Object::Arguments::validate(std::vector<std::string>& importPaths, std::string& exportPath) {
+bool cryo::Object::Arguments::validate(std::vector<std::string>& importPaths, std::string& importPath, std::string& exportPath) {
 
     int help_status = 0;
     int version_status = 0;
@@ -69,6 +69,7 @@ bool cryo::Object::Arguments::validate(std::vector<std::string>& importPaths, st
         printf("%s (%s) %s\n", this->arguments_values[0], CRYO_APPLICATION_NAME, CRYO_VERSION);
         return true;
     } else if(import_status != 0 && export_status != 0) {
+        importPath = std::string(this->import_path);
         exportPath = std::string(this->export_path);
 
         std::string open_path = std::string(import_path);
@@ -114,6 +115,7 @@ cryo::Object::Object(int argc, char *argv[]) {
     this->arguments = std::make_unique<Arguments>(argc, argv);
     this->generator = std::make_unique<Generator>();
     this->import_paths = {};
+    this->import_path = "";
     this->export_path = "";
 }
 
@@ -123,9 +125,9 @@ cryo::Object::~Object() {
 }
 
 bool cryo::Object::validate() {
-    return this->arguments->validate(this->import_paths, this->export_path);
+    return this->arguments->validate(this->import_paths, this->import_path, this->export_path);
 }
 
 bool cryo::Object::generate() {
-    return this->generator->generate(this->import_paths, this->export_path);
+    return this->generator->generate(this->import_paths, this->import_path, this->export_path);
 }

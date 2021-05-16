@@ -38,18 +38,19 @@ Options:\n\
         public:
             Arguments(int argc, char *argv[]);
             ~Arguments();
-            bool validate(std::vector<std::string>& importPaths, std::string& exportPath);
+            bool validate(std::vector<std::string>& importPaths, std::string& importPath, std::string& exportPath);
             bool get_src_path();
         };
         class Generator {
         public:
             Generator();
             ~Generator();
-            bool generate(std::vector<std::string>& importPaths, std::string& exportPath);
+            bool generate(std::vector<std::string>& importPaths, std::string& importPath, std::string& exportPath);
         };
         std::unique_ptr<Arguments> arguments;
         std::unique_ptr<Generator> generator;
         std::vector<std::string> import_paths;
+        std::string import_path;
         std::string export_path;
 
     public:
