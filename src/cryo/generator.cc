@@ -9,8 +9,6 @@ cryo::Object::Generator::~Generator() {
 
 bool cryo::Object::Generator::generate(std::vector<std::string>& importPaths, std::string& importPath, std::string& exportPath) {
 
-    int hash_seed = 0;
-
     std::smatch match;
     if (!std::regex_search(exportPath, match, std::regex("/$"))) {
         exportPath = exportPath + "/";
@@ -44,7 +42,11 @@ bool cryo::Object::Generator::generate(std::vector<std::string>& importPaths, st
         std::string export_directory_path = "";
         std::string extension = "";
 
+        unsigned int line_number = 0;
+        unsigned int current_line_number = 0;
+
         while (getline(ifs, str)) {
+            line_number++;
             if(std::regex_search(str, match, re)) {
                 if(std::regex_search(str, match, cxx_code_block_begin)) {
                     extension = match[2].str();
@@ -55,7 +57,7 @@ bool cryo::Object::Generator::generate(std::vector<std::string>& importPaths, st
 
                     if (is_cxx_code_block == false) {
                         is_cxx_code_block = true;
-                        hash_seed++;
+                        current_line_number = line_number;
                     } else {
                         printf("parse error.");
                         return 0;
@@ -65,7 +67,7 @@ bool cryo::Object::Generator::generate(std::vector<std::string>& importPaths, st
 
                         // export file
                         // TODO: Make file names easier to understand.
-                        std::string export_file = export_directory_path + "/" + std::to_string(hash_seed) + "." + extension;
+                        std::string export_file = export_directory_path + "/" + std::to_string(current_line_number) + "." + extension;
                         std::cout << "[INFO] export: " << export_file << std::endl;
                         std::ofstream outputfile(export_file.c_str());
                         outputfile << export_string;
