@@ -66,7 +66,6 @@ bool cryo::Object::Generator::generate(std::vector<std::string>& importPaths, st
                     if (is_cxx_code_block == true) {
 
                         // export file
-                        // TODO: Make file names easier to understand.
                         std::string export_file = export_directory_path + "/" + std::to_string(current_line_number) + "." + extension;
                         std::cout << "[INFO] export: " << export_file << std::endl;
                         std::ofstream outputfile(export_file.c_str());
