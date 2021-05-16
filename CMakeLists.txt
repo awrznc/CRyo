@@ -52,5 +52,5 @@ install( FILES ${CMAKE_SOURCE_DIR}/CRyo.cmake DESTINATION share/cmake/cryo/ )
 # CPack
 set(CPACK_DEBIAN_PACKAGE_MAINTAINER "awrznc")
 set(CPACK_PACKAGE_FILE_NAME "CRyo")
-set(CPACK_PACKAGE_VERSION  "0.0.3")
+set(CPACK_PACKAGE_VERSION  "0.0.4")
 include(CPack)
