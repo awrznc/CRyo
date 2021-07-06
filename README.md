@@ -15,7 +15,7 @@ apt-get install -y wget
 wget https://github.com/awrznc/CRyo/releases/latest/download/CRyo.deb
 apt-get install -y ./CRyo.deb
 
-# CentOS 8
+# AlmaLinux 8
 dnf install -y https://github.com/awrznc/CRyo/releases/latest/download/CRyo.rpm
 ```
 
