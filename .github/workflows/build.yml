@@ -6,9 +6,9 @@ on:
     branches:
 
 jobs:
-  centos-build:
+  almalinux-build:
     runs-on: ubuntu-latest
-    container: centos:8
+    container: almalinux:8
     steps:
 
     - name: Get files
