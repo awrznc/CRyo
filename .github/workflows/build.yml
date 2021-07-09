@@ -34,7 +34,7 @@ jobs:
         dnf install -y ./CRyo.rpm
         cryo --version
 
-    - name: Documentation Test
+    - name: Commentation Test
       run: |
         mkdir -p ./test/build && cd ./test/build
         cmake .. && cmake --build .
@@ -73,7 +73,7 @@ jobs:
         apt-get install -y ./CRyo.deb
         cryo --version
 
-    - name: Documentation Test
+    - name: Commentation Test
       run: |
         mkdir -p ./test/build && cd ./test/build
         cmake .. && cmake --build .

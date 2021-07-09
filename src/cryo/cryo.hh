@@ -13,7 +13,7 @@ namespace cryo {
 #include "result.hh"
 
 #define CRYO_APPLICATION_NAME   "CRyo"
-#define CRYO_VERSION            "0.0.4"
+#define CRYO_VERSION            "0.0.5"
 #define CRYO_HELP_STRING "\
 Usage:\n\
     cryo [options] <path>\n\
@@ -21,9 +21,7 @@ Options:\n\
     -h --help           Display this information.\n\
     -v --version        Display the version number.\n\
     -i --import <path>  Specify target for import files.\n\
-    -e --export <path>  Specify target for export files.\n\
-    -d --disable-docs   Disable generate documents.\n\
-    -t --disable-tests  Disable generate tests.\n"
+    -e --export <path>  Specify target for export files.\n"
 
 #define CRYO_CXX_EXTENSION_REGEX "(\\.cc|\\.cxx|\\.cpp|\\.c|\\.hh|\\.hxx|\\.hpp|\\.h)$"
 
