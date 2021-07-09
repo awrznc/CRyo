@@ -9,7 +9,7 @@ int main(int argc, char *argv[]) {
     // Validate Arguments.
     if (!cryo->validate()) return 1;
 
-    // Generate Documents and Tests.
+    // Generate Tests.
     if (!cryo->generate()) return 2;
 
     // SUCCESS

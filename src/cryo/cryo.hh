@@ -21,9 +21,7 @@ Options:\n\
     -h --help           Display this information.\n\
     -v --version        Display the version number.\n\
     -i --import <path>  Specify target for import files.\n\
-    -e --export <path>  Specify target for export files.\n\
-    -d --disable-docs   Disable generate documents.\n\
-    -t --disable-tests  Disable generate tests.\n"
+    -e --export <path>  Specify target for export files.\n"
 
 #define CRYO_CXX_EXTENSION_REGEX "(\\.cc|\\.cxx|\\.cpp|\\.c|\\.hh|\\.hxx|\\.hpp|\\.h)$"
 

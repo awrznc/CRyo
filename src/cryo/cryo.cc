@@ -20,16 +20,12 @@ bool cryo::Object::Arguments::validate(std::vector<std::string>& importPaths, st
     int version_status = 0;
     int import_status = 0;
     int export_status = 0;
-    int disable_docs_status = 0;
-    int disable_tests_status = 0;
 
     struct option longopts[] = {
         { "help",          no_argument,        NULL, 'h' },
         { "version",       no_argument,        NULL, 'v' },
         { "import",        required_argument,  NULL, 'i' },
         { "export",        required_argument,  NULL, 'e' },
-        { "disable-docs",  no_argument,        NULL, 'd' },
-        { "disable-tests", no_argument,        NULL, 't' },
         { 0,               0,                  0,     0  },
     };
 
@@ -50,12 +46,6 @@ bool cryo::Object::Arguments::validate(std::vector<std::string>& importPaths, st
         case 'e':
             export_status = 1;
             this->export_path = optarg;
-            break;
-        case 'd':
-            disable_docs_status = 1;
-            break;
-        case 't':
-            disable_tests_status = 1;
             break;
         default:
             return 1;
